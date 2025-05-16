@@ -1,21 +1,22 @@
 <div>
   <h2>Forecast Details</h2>
   <h3>Current status</h3>
-  <p><strong>City:</strong> <%= @location.name %></p>
-  <p><strong>State:</strong> <%= @location.region %></p>
-  <p><strong>Country:</strong> <%= @location.country %></p>
-  <p><strong>Local time:</strong> <%= @location.localtime %></p>
-  <p><strong>Cached response?:</strong> <%= @cached_response %></p>
+  
+  <p><strong>City:</strong> <%= @forecast_decorator.city %></p>
+  <p><strong>State:</strong> <%= @forecast_decorator.state %></p>
+  <p><strong>Country:</strong> <%= @forecast_decorator.country %></p>
+  <p><strong>Local time:</strong> <%= @forecast_decorator.localtime %></p>
+  <p><strong>Cached response?:</strong> <%= @forecast_decorator.cached_response %></p>
 
-  <p><strong>Temperature (°C):</strong> <%= @current.temp_c %>°C</p>
-  <p><strong>Temperature (°F):</strong> <%= @current.temp_f %>°F</p>
-  <p><strong>Condition:</strong> <%= @current.condition.text %></p>
-  <p><img src="<%= @current.condition.icon %>"/></p>
+  <p><strong>Temperature (°C):</strong> <%= @forecast_decorator.current_temp_c %>°C</p>
+  <p><strong>Temperature (°F):</strong> <%= @forecast_decorator.current_temp_f %>°F</p>
+  <p><strong>Condition:</strong> <%= @forecast_decorator.condition_text %></p>
+  <p><img src="<%= @forecast_decorator.condition_icon %>"/></p>
 
   <h3>Upcoming</h3>
   <p><strong>Forecast for the next 5 days:</strong></p>
   <ul>
-    <% @forecast.forecastday.each do |day| %>
+    <% @forecast_decorator.forecastdays.each do |day| %>
       <li>
         <strong>Date:</strong> <%= day.date %><br>
         <strong>Max Temp (°C):</strong> <%= day.day.maxtemp_c %>°C<br>
@@ -28,7 +29,7 @@
   <h3>Hourly Forecast</h3>
   <p><strong>Forecast for the next 24 hours:</strong></p>
   <ul>
-    <% @forecast.forecastday.first.hour.each do |hour| %>
+    <% @forecast_decorator.forecastdays.first.hour.each do |hour| %>
       <li>
         <strong>Time:</strong> <%= hour.time %><br>
         <strong>Temperature (°C):</strong> <%= hour.temp_c %>°C<br>
