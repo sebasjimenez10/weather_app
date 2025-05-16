@@ -26,9 +26,7 @@ class ForecastsController < ApplicationController
       return
     end
 
-    options = { address: forecast_form.to_street_address }
-
-    Weather::ForecastService.forecast(options).tap do |response|
+    Weather::ForecastService.forecast(address: forecast_form.to_street_address).tap do |response|
       @forecast_decorator = Forecasts::ForecastDecorator.new(response)
     end
   end

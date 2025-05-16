@@ -7,12 +7,12 @@ module Forecasts
     # @param [Forecasts::ForecastResult] forecast The forecast result object
     # @return [Forecasts::ForecastDecorator] The initialized ForecastDecorator object
     def initialize(forecast)
-      response = forecast.response
+      result = forecast.result
       cached_response = forecast.cached_response
 
-      @location = response.location
-      @current = response.current
-      @forecast = response.forecast
+      @location = result.location
+      @current = result.current
+      @forecast = result.forecast
       @cached_response = cached_response
     end
 

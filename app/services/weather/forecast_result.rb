@@ -4,11 +4,13 @@
 # @attr_reader [Weather::API::Response] :response The response object containing forecast data
 # @attr_reader [Boolean] :cached_response Indicates if the response was cached
 #
-class ForecastResult
-  attr_reader :response, :cached_response
+module Weather
+  class ForecastResult
+    attr_reader :result, :cached_response
 
-  def initialize(response:, cached_response:)
-    @response = response
-    @cached_response = cached_response
+    def initialize(result:, cached_response:)
+      @result = result
+      @cached_response = cached_response
+    end
   end
 end
