@@ -14,7 +14,7 @@ module Weather
         cached_response = check_cache_existence(address)
         response = retrieve_forecast(address, client)
 
-        { response: response, cached_response: cached_response }
+        ForecastResult.new(response: response, cached_response: cached_response)
       end
 
       private
