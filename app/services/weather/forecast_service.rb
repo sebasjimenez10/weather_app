@@ -8,7 +8,7 @@ module Weather
         client = builder.build_client(name: :weather_api)
 
         cached_response = true
-        response = Rails.cache.fetch(address.postal_code) do
+        response = Rails.cache.fetch(address.postal_code, expires_in: 30.minutes) do
           cached_response = false
           client.forecast(address.postal_code)
         end
