@@ -3,7 +3,10 @@ require "ostruct"
 module Weather
   module WeatherAPI
     class Response
-      def initialize
+      attr_accessor :data
+
+      def initialize(json)
+        @data = JSON.parse(json, object_class: OpenStruct)
       end
     end
   end
