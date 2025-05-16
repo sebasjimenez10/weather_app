@@ -5,14 +5,14 @@ class ForecastsController < ApplicationController
   def show
     forecast_form = Forecasts::ForecastAddressForm.new(forecast_params)
 
-    if forecast_form.valid?
-      address = forecast_form.to_street_address
-
-      Weather::ForecastService.forecast(address: address).tap do |response|
-        @forecast_decorator = Forecasts::ForecastDecorator.new(response)
-      end
-    else
+    if !forecast_form.valid?
       redirect_to forecasts_path, flash: { alert: "Please enter a valid address." }
+      return
+    end
+
+    address = forecast_form.to_street_address
+    Weather::ForecastService.forecast(address: address).tap do |response|
+      @forecast_decorator = Forecasts::ForecastDecorator.new(response)
     end
   end
 
