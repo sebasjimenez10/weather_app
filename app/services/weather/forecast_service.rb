@@ -7,7 +7,7 @@ module Weather
       #
       # @param [StreetAddress::US] :address The parsed address
       # @param [Symbol] :client The client to use for the request
-      # @return [Hash] with location, current, forecast and cached_response indicator
+      # @return [ForecastResult] with result and cached_response indicator
       def forecast(address:, api: :weather_api)
         client = build_client_for(api)
 
