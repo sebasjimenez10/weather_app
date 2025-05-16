@@ -1,6 +1,10 @@
 <h1>Weather Forecasts</h1>
 <p>Enter address to see forecast information</p>
 
+<% if flash[:alert] %>
+  <%= flash[:alert] %>
+<% end %>
+
 <div data-controller="forecast">
   <input type="text" data-forecast-target="input" placeholder="Enter address">
   <button data-action="click->forecast#load">Get Forecast</button>
