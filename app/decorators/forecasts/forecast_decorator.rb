@@ -1,5 +1,5 @@
 module Forecasts
-  class ForecastDecorator
+  class ForecastDecorator < DecoratorBase
     def initialize(forecast)
       @location = forecast[:location]
       @current = forecast[:current]

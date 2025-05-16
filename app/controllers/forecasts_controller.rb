@@ -3,10 +3,10 @@ class ForecastsController < ApplicationController
   end
 
   def show
-    forecast = ForecastAddressForm.new(forecast_params)
+    forecast_form = Forecasts::ForecastAddressForm.new(forecast_params)
 
-    if forecast.valid?
-      address = forecast.to_street_address
+    if forecast_form.valid?
+      address = forecast_form.to_street_address
 
       Weather::ForecastService.forecast(address: address).tap do |response|
         @forecast_decorator = Forecasts::ForecastDecorator.new(response)
