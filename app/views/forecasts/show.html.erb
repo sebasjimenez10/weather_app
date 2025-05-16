@@ -1,0 +1,40 @@
+<div>
+  <h2>Forecast Details</h2>
+  <h3>Current status</h3>
+  <p><strong>City:</strong> <%= @location.name %></p>
+  <p><strong>State:</strong> <%= @location.region %></p>
+  <p><strong>Country:</strong> <%= @location.country %></p>
+  <p><strong>Local time:</strong> <%= @location.localtime %></p>
+  <p><strong>Cached response?:</strong> <%= @cached_response %></p>
+
+  <p><strong>Temperature (°C):</strong> <%= @current.temp_c %>°C</p>
+  <p><strong>Temperature (°F):</strong> <%= @current.temp_f %>°F</p>
+  <p><strong>Condition:</strong> <%= @current.condition.text %></p>
+  <p><img src="<%= @current.condition.icon %>"/></p>
+
+  <h3>Upcoming</h3>
+  <p><strong>Forecast for the next 5 days:</strong></p>
+  <ul>
+    <% @forecast.forecastday.each do |day| %>
+      <li>
+        <strong>Date:</strong> <%= day.date %><br>
+        <strong>Max Temp (°C):</strong> <%= day.day.maxtemp_c %>°C<br>
+        <strong>Min Temp (°C):</strong> <%= day.day.mintemp_c %>°C<br>
+        <strong>Condition:</strong> <%= day.day.condition.text %><br>
+        <img src="<%= day.day.condition.icon %>"/>
+      </li>
+    <% end %>
+  </ul>
+  <h3>Hourly Forecast</h3>
+  <p><strong>Forecast for the next 24 hours:</strong></p>
+  <ul>
+    <% @forecast.forecastday.first.hour.each do |hour| %>
+      <li>
+        <strong>Time:</strong> <%= hour.time %><br>
+        <strong>Temperature (°C):</strong> <%= hour.temp_c %>°C<br>
+        <strong>Condition:</strong> <%= hour.condition.text %><br>
+        <img src="<%= hour.condition.icon %>"/>
+      </li>
+    <% end %>
+  </ul>
+</div>
