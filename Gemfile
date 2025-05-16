@@ -43,6 +43,9 @@ gem "thruster", require: false
 # HTTP Client
 gem "httparty", "~> 0.23.1"
 
+# Street address parser
+gem "StreetAddress", "~> 1.0", require: "street_address"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
