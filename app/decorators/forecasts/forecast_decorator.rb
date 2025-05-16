@@ -1,10 +1,19 @@
 module Forecasts
+  # Decorator for Forecasts response data.
   class ForecastDecorator < DecoratorBase
+    # Initializes the ForecastDecorator with the forecast data.
+    # It extracts the location, current weather, and forecast data from the response.
+    #
+    # @param forecast [Hash] The forecast data containing response and cached_response
+    # @return [Forecasts::ForecastDecorator] The initialized ForecastDecorator object
     def initialize(forecast)
-      @location = forecast[:location]
-      @current = forecast[:current]
-      @forecast = forecast[:forecast]
-      @cached_response = forecast[:cached_response]
+      response = forecast[:response]
+      cached_response = forecast[:cached_response]
+
+      @location = response.location
+      @current = response.current
+      @forecast = response.forecast
+      @cached_response = cached_response
     end
 
     def city
