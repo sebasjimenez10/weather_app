@@ -5,6 +5,8 @@ module Forecasts
     # It extracts the location, current weather, and forecast data from the response.
     #
     # @param [Forecasts::ForecastResult] forecast The forecast result object
+    #   - result [Weather::API::WeatherAPI::Response]
+    #   - cached_response [Boolean]
     # @return [Forecasts::ForecastDecorator] The initialized ForecastDecorator object
     def initialize(forecast)
       result = forecast.result

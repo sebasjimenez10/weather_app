@@ -3,10 +3,8 @@ require "ostruct"
 module Weather
   module API
     module WeatherAPI
-      # Response is responsible for parsing the JSON response from the Weather API
-      # and providing access to the location, current, and forecast data.
+      # Response is responsible for parsing the JSON response from the Weather API.
       # It uses OpenStruct to allow for easy access to the JSON data as properties.
-      # This class is used internally by the WeatherAPI client.
       # @see Weather::API::WeatherAPI::Client
       class Response
         attr_accessor :data

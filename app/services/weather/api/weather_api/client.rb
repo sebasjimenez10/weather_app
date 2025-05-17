@@ -23,7 +23,7 @@ module Weather
         # It constructs the query parameters with the zip code and authentication key.
         #
         # @param [String] zip_code The zip code for which to fetch the forecast
-        # @return [Weather::API::Response] The parsed response object containing forecast data
+        # @return [Weather::API::WeatherAPI::Response] The parsed response object containing forecast data
         # @raise [HTTParty::Error] if the request fails
         # @raise [JSON::ParserError] if the response is not valid JSON
         def forecast(zip_code)

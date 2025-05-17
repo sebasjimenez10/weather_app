@@ -8,6 +8,8 @@ module Weather
       # @param [StreetAddress::US] :address The parsed address
       # @param [Symbol] :client The client to use for the request
       # @return [ForecastResult] with result and cached_response indicator
+      #   - result [Weather::API::WeatherAPI::Response] The response object containing forecast data
+      #   - cached_response [Boolean] Indicates if the response was cached
       def forecast(address:, api: :weather_api)
         client = build_client_for(api)
 
@@ -20,7 +22,7 @@ module Weather
       private
 
       # Builds the appropriate client based on the provided API symbol.
-      # Supports [:weather_api]
+      # Supported APIs: [:weather_api]
       #
       # @param [Symbol] api The API symbol
       # @return [Weather::API::WeatherAPI::ClientBase] any subclass of Weather::API::ClientBase
@@ -33,7 +35,7 @@ module Weather
       #
       # @param [StreetAddress::US] address The parsed address
       # @param [Weather::API::ClientBase] client The client to use for the request
-      # @return [Weather::API::Response] The response object containing forecast data
+      # @return [Weather::API::WeatherAPI::Response] The response object containing forecast data
       def retrieve_forecast(address, client)
         Rails.cache.fetch(address.postal_code, expires_in: 30.minutes) do
           client.forecast(address.postal_code)
