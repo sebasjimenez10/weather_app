@@ -84,6 +84,6 @@ jobs:
           bundler-cache: true
 
       - name: Run tests
-        run: bin/rspec --format progress --color --profile 10 --order random
+        run: bundle exec rspec --format progress --color --profile 10 --order random
         env:
           RAILS_ENV: test
