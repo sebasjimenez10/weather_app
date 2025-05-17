@@ -55,5 +55,17 @@ RSpec.describe "Forecasts", type: :request do
       get "/forecasts/#{CGI.escape(address)}"
       expect(response).to have_http_status(:success)
     end
+
+    context "when the address is invalid" do
+      before do
+        allow(Forecasts::ForecastAddressForm).to receive(:new).and_return(double(valid?: false))
+      end
+
+      it "redirects to the index page with an alert" do
+        get "/forecasts/invalid_address"
+        expect(response).to redirect_to(forecasts_path)
+        expect(flash[:alert]).to eq("Please enter a valid address.")
+      end
+    end
   end
 end
