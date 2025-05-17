@@ -3,6 +3,9 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["input"]
 
+  // This controller is responsible for loading the Mapbox search library
+  // and connecting it to the input field. It listens for the 'retrieve' event
+  // and populates the input field with the address components.
   connect() {
     const accessToken = document.querySelector("meta[name='mapbox-token']").content
 
@@ -35,6 +38,8 @@ export default class extends Controller {
     })
   }
 
+  // This method loads the Mapbox search library asynchronously.
+  // It returns a promise that resolves when the library is loaded.
   loadMapbox() {
     return new Promise((resolve) => {
       const script = document.getElementById('search-js')

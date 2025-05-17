@@ -20,10 +20,9 @@ module Weather
           @client = client
         end
 
-        # Fetches the weather forecast for the given zip code.
-        # It constructs the query parameters with the zip code and authentication key.
+        # Fetches the weather forecast for the given a query string.
         #
-        # @param [String] query The zip code for which to fetch the forecast
+        # @param [String] query open format address string to fetch the forecast for
         # @return [Weather::API::WeatherAPI::Response] The parsed response object containing forecast data
         # @raise [HTTParty::Error] if the request fails
         # @raise [JSON::ParserError] if the response is not valid JSON

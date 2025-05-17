@@ -31,7 +31,7 @@ module Weather
       end
 
       # Retrieves the forecast data for the given address using the provided client.
-      # Caches the response for 30 minutes.
+      # Caches the response for 30 minutes if zip code is present. Skips the cache otherwise.
       #
       # @param [StreetAddress::US] address The parsed address
       # @param [Weather::API::ClientBase] client The client to use for the request
@@ -50,7 +50,7 @@ module Weather
       end
 
       # Checks if the forecast data for the given address is already cached.
-      # Returns true if cached, false otherwise.
+      # Returns true if cached, false otherwise. Returns false if the address does not have a postal code.
       #
       # @param [StreetAddress::US] address The parsed address
       # @return [Boolean] true if cached, false otherwise

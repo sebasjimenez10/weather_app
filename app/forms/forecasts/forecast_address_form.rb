@@ -9,8 +9,9 @@ module Forecasts
     validates_presence_of :address
 
     # Converts the address string into a StreetAddress::US object.
+    # Allows for flexible input.
     #
-    # @return [StreetAddress::US] The parsed address object.
+    # @return [StreetAddress::US::Address] The parsed address object.
     def to_street_address
       # Allows for a 5-digit postal code to be passed in as a string.
       # StreetAddress::US.parse will return nil if the string is not a valid address,
