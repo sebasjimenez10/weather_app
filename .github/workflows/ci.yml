@@ -104,3 +104,4 @@ jobs:
           PGUSER: postgres
           PGPASSWORD: postgres
           PGDATABASE: test
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
