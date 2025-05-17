@@ -59,7 +59,7 @@ module Forecasts
     end
 
     def friendly_time(time)
-      time.to_datetime.strftime("%H:%M:%S")
+      time.to_datetime.strftime("%I:%M %p")
     end
 
     def friendly_date(date)

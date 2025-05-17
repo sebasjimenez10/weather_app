@@ -4,9 +4,18 @@
 
 ## Weather App
 
-A simple Ruby on Rails application that provides weather forecasts for a given address. It fetches current and extended forecast data using WeatherAPI, caches results per ZIP code, and cleanly separates responsibilities across form, service, and client layers.
+A simple Ruby on Rails application that provides weather forecast for a given address. It fetches current and extended forecast data using WeatherAPI, caches results per ZIP code, and displays the result in a TailwindCSS-styled UI.
 
 ## Architecture & Design
+
+### Assumptions & Considerations
+
+- The user must provide an address that has a zip code.
+- To aid the user in the address typing process, an auto-complete address feature was implemented via mapbox.
+- When a user ends up typing or selecting an address that lacks a zip code, a fallback process can be triggered to get geocoordinates based on the address from a geo-location service. This would lack a zip code so that cache would not be set. Therefore, this was not implemented to avoid two types of simultaneous caching keys.
+- If there is a zip code we can proceed with querying the forecast.
+- An alternative cache key strategy can be rounding to 2 decimals geo-location coordinates, which does not affect the accuracy of the weather data returned back to the user. Affects by around ~1-10 kms.
+- To facilitate user experience, forward geolocation can be used with an ambiguous address, to load possible addresses containing a zip code.
 
 ### Design choices
 
@@ -55,7 +64,7 @@ The following diagram illustrates the flow from the user interface to the weathe
 2. Run `bundle install` to install dependencies.
 3. Run `bundle exec rails db:create` to create the db.
 4. Make sure your rails master key is set (config/master.key)
-5. Set your WeatherAPI API key inside the credentials file:
+5. Set your [WeatherAPI](https://www.weatherapi.com/docs/) API key inside the credentials file:
    5.1 Run `EDITOR="code --wait" bundle exec rails credentials:edit`.
    5.2 Make sure it follows this structure:
 
@@ -64,7 +73,7 @@ The following diagram illustrates the flow from the user interface to the weathe
      weather_api_key: <...>
 
    test:
-     weather_api_key: <...>
+     weather_api_key: "test_key"
 
    production:
      weather_api_key: <...>
@@ -77,18 +86,20 @@ NOTE: There are no db-backed models but rails will require the existence of the 
 ## How to run the application
 
 ```bash
-bundle install`
-bundle exec rails db:create` # (needed only once)
 bundle exec rails server`
 ```
 
-Open your browser and type http://localhost:3000; You should see the "Weather Forecasts" page.
+Open your browser and type http://localhost:3000, you should see the "Weather Forecasts" initial page.
 
 ## How to run the tests
 
 ### RSpec
 
 Run `bundle exec rspec` to execute the test suite. This includes system tests with capybara.
+
+### Code coverage
+
+> Code coverage reports are generated in `/coverage/index.html` when `COVERAGE=true` is set when running specs.
 
 ### Cypress
 
@@ -103,17 +114,13 @@ There is an initial set of tests with Cypress. To run them interactively follow 
 
 To simply run all Cypress tests run `npx cypress run`.
 
-### Code coverage
-
-> Code coverage reports are generated in `/coverage/index.html` when `COVERAGE=true` is set when running specs.
-
 ## Services
 
 - Uses [WeatherAPI](https://www.weatherapi.com/docs/) for weather data
 
 ## Tech Stack
 
-- Ruby on Rails 7
+- Ruby on Rails 8.0.2
 - Ruby 3.3.0
 - HTTParty for HTTP requests
 - Capybara + RSpec for testing

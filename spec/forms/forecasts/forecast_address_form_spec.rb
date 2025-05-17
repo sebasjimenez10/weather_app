@@ -4,12 +4,21 @@ RSpec.describe Forecasts::ForecastAddressForm, type: :model do
   subject { described_class.new(address: address) }
 
   let(:valid_address) { "1600 Pennsylvania Ave, Washington, DC 20500" }
+  let(:valid_address_zipcode_only) { "20500" }
   let(:invalid_address) { "Not a real address" }
   let(:blank_address) { "" }
 
   describe "validations" do
     context "when address is present and valid" do
       let(:address) { valid_address }
+
+      it "is valid" do
+        expect(subject).to be_valid
+      end
+    end
+
+    context "when address is valid but only a zip code" do
+      let(:address) { valid_address_zipcode_only }
 
       it "is valid" do
         expect(subject).to be_valid
@@ -52,6 +61,16 @@ RSpec.describe Forecasts::ForecastAddressForm, type: :model do
         result = subject.to_street_address
         expect(result).to be_a(StreetAddress::US::Address)
         expect(result.to_s).to include("1600 Pennsylvania Ave")
+      end
+    end
+
+    context "when address is valid" do
+      let(:address) { valid_address_zipcode_only }
+
+      it "returns a StreetAddress::US::Address object" do
+        result = subject.to_street_address
+        expect(result).to be_a(StreetAddress::US::Address)
+        expect(result.postal_code).to include("20500")
       end
     end
 

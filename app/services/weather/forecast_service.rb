@@ -36,6 +36,7 @@ module Weather
       # @param [StreetAddress::US] address The parsed address
       # @param [Weather::API::ClientBase] client The client to use for the request
       # @return [Weather::API::WeatherAPI::Response] The response object containing forecast data
+      #   - data [OpenStruct] The forecast data
       def retrieve_forecast(address, client)
         Rails.cache.fetch(address.postal_code, expires_in: 30.minutes) do
           Rails.logger.info("[ForecastService][Cache miss] Fetching forecast for #{address.postal_code}")

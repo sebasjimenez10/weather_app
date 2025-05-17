@@ -13,6 +13,11 @@ module Forecasts
     #
     # @return [StreetAddress::US] The parsed address object.
     def to_street_address
+      # Allows for a 5-digit postal code to be passed in as a string.
+      # StreetAddress::US.parse will return nil if the string is not a valid address,
+      # but a zip code is enough for to get a forecast.
+      return StreetAddress::US::Address.new(postal_code: address) if address.match?(/^\d{5}$/)
+
       StreetAddress::US.parse(address)
     end
 
@@ -22,6 +27,7 @@ module Forecasts
     # @return [void]
     def address_format
       return if address.blank?
+      return if address.match?(/^\d{5}$/)
 
       parsed_address = StreetAddress::US.parse(address)
 
