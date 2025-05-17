@@ -25,6 +25,6 @@ RSpec.describe "Forecasts", type: :system do
     fill_in "forecast-address", with: "A"
     click_button "Get Forecast"
 
-    expect(page).to have_content("Please enter a valid address. ")
+    expect(page).to have_content("Please enter a valid address.")
   end
 end

@@ -58,7 +58,7 @@ RSpec.describe "Forecasts", type: :request do
 
     context "when the address is invalid" do
       before do
-        allow(Forecasts::ForecastAddressForm).to receive(:new).and_return(double(valid?: false))
+        allow(Forecasts::ForecastAddressForm).to receive(:new).and_return(double(valid?: false, errors: double(full_messages: [ "Invalid address" ])))
       end
 
       it "redirects to the index page with an alert" do
