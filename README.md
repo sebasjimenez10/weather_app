@@ -1,3 +1,5 @@
+![CI](https://github.com/sebasjimenez10/weather_app/actions/workflows/ci.yml/badge.svg?branch=main)
+
 # README
 
 ## Weather App
