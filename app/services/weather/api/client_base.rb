@@ -3,7 +3,6 @@ module Weather
     # ClientBase is the base class for all API clients.
     class ClientBase
       include HTTParty
-      include Singleton
 
       # Defines the base abstract method for forecast implementations.
       def forecast(query)

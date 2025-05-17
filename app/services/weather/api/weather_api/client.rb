@@ -10,6 +10,9 @@ module Weather
         base_uri "https://api.weatherapi.com"
         default_params days: 5, aqi: "no", alerts: "no"
 
+        # Holds the authentication details for the Weather API.
+        attr_accessor :auth
+
         # Initializes the WeatherAPI client with the provided API key.
         # The API key is fetched from the Rails credentials based on the current environment.
         # If no key is provided, it defaults to the one in the credentials.
@@ -21,14 +24,13 @@ module Weather
 
         # Fetches the weather forecast for the given zip code.
         # It constructs the query parameters with the zip code and authentication key.
-        # The response is parsed and returned as a Response object.
         #
         # @param [String] zip_code The zip code for which to fetch the forecast
         # @return [Weather::API::Response] The parsed response object containing forecast data
         # @raise [HTTParty::Error] if the request fails
         # @raise [JSON::ParserError] if the response is not valid JSON
         def forecast(zip_code)
-          options = { q: zip_code }.merge!(@auth)
+          options = { q: zip_code }.merge!(auth)
 
           self.class.get("/v1/forecast.json", query: options, format: :plain).then do |json_response|
             Response.new(json_response)

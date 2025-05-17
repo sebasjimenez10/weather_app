@@ -13,7 +13,7 @@ module Weather
         def build_client(name:)
           case name
           when :weather_api
-            Weather::API::WeatherAPI::Client.instance
+            Weather::API::WeatherAPI::Client.new
           else
             raise "Unsupported client"
           end
