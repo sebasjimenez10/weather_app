@@ -5,7 +5,18 @@
   <%= flash[:alert] %>
 <% end %>
 
-<div data-controller="forecast">
-  <input id="forecast-address" type="text" data-forecast-target="input" placeholder="Enter address">
+
+<div data-controller="forecast mapbox">
+  <form>
+    <input
+      id="forecast-address"
+      type="text"
+      data-mapbox-target="input"
+      data-forecast-target="input"
+      placeholder="Search for an address"
+      autocomplete="address-line1"
+    />
+  </form>
+
   <button data-action="click->forecast#load">Get Forecast</button>
 </div>
