@@ -3,9 +3,7 @@ module Weather
     module WeatherAPI
       # Client is responsible for interacting with the Weather API.
       # It uses HTTParty to make HTTP requests and fetch weather forecast data.
-      # The client is a singleton, ensuring that only one instance is used throughout the application.
-      # It includes the ClientBase module, which provides a base structure for API clients.
-      # The client is initialized with an API key, which is stored in the Rails credentials.
+      # It inherits from the ClientBase module, which provides a base structure for API clients.
       class Client < ClientBase
         base_uri "https://api.weatherapi.com"
         default_params days: 5, aqi: "no", alerts: "no"
@@ -15,7 +13,6 @@ module Weather
 
         # Initializes the WeatherAPI client with the provided API key.
         # The API key is fetched from the Rails credentials based on the current environment.
-        # If no key is provided, it defaults to the one in the credentials.
         #
         # @param [String] Optional key The API key for the Weather API
         def initialize(key = api_key)
