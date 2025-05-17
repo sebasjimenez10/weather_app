@@ -53,8 +53,22 @@ jobs:
       - name: Lint code for consistent style
         run: bin/rubocop -f github
 
-  coverage:
+  test_with_coverage:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
+        options: >-
+          --health-cmd="pg_isready -U postgres"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -64,26 +78,29 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until pg_isready -h localhost -U postgres; do
+            sleep 1
+          done
+
+      - name: Set up database
+        run: |
+          bundle exec rails db:create db:schema:load --trace
+        env:
+          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: test
 
       - name: Run tests and generate coverage report
         run: bundle exec rspec --format SimpleCov::Formatter::HTMLFormatter --out coverage/index.html --format progress --color --profile 10 --order random
         env:
           RAILS_ENV: test
           COVERAGE: true
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
-
-      - name: Run tests
-        run: bundle exec rspec --format progress --color --profile 10 --order random
-        env:
-          RAILS_ENV: test
+          PGHOST: localhost
+          PGUSER: postgres
+          PGPASSWORD: postgres
+          PGDATABASE: test
