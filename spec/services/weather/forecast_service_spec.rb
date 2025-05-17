@@ -7,12 +7,12 @@ RSpec.describe Weather::ForecastService do
     let(:client) { instance_double(Weather::API::WeatherAPI::Client) }
     let(:cached_response) { false }
     let(:forecast_response) { instance_double(Weather::API::WeatherAPI::Response) }
-    let(:forecast_result) { instance_double(Weather::ForecastResult, result: forecast_response, cached_response: cached_response) }
+    let(:forecast_result) { Weather::ForecastService::ForecastResult.new(result: forecast_response, cached_response: cached_response) }
 
     before do
       allow(Weather::API::ClientBuilder).to receive(:build_client).with(name: api).and_return(client)
       allow(Rails.cache).to receive(:exist?).with(address.postal_code).and_return(cached_response)
-      allow(Rails.cache).to receive(:fetch).with(address.postal_code, expires_in: 30.minutes).and_yield
+      allow(Rails.cache).to receive(:fetch).with(address.postal_code, expires_in: 30.minutes).and_call_original
       allow(client).to receive(:forecast).with(address.postal_code).and_return(forecast_response)
     end
 
@@ -29,15 +29,39 @@ RSpec.describe Weather::ForecastService do
     end
 
     it "retrieves the forecast data using the client" do
-      described_class.forecast(address: address, api: api)
+      result = described_class.forecast(address: address, api: api)
 
       expect(client).to have_received(:forecast).with(address.postal_code)
+      expect(result.result).to eq(forecast_result.result)
+      expect(result.cached_response).to eq(forecast_result.cached_response)
     end
 
     it "caches the forecast data for 30 minutes" do
       described_class.forecast(address: address, api: api)
 
       expect(Rails.cache).to have_received(:fetch).with(address.postal_code, expires_in: 30.minutes)
+    end
+
+    context "when the there is cache hit" do
+      let(:cached_response) { true }
+
+      before do
+        allow(Rails.cache).to receive(:exist?).with(address.postal_code).and_return(cached_response)
+        allow(Rails.cache).to receive(:fetch).with(address.postal_code, expires_in: 30.minutes).and_return(forecast_response)
+      end
+
+      it "does not call the client to fetch the forecast data" do
+        described_class.forecast(address: address, api: api)
+
+        expect(client).not_to have_received(:forecast)
+      end
+
+      it "returns the cached response" do
+        result = described_class.forecast(address: address, api: api)
+
+        expect(result.result).to eq(forecast_result.result)
+        expect(result.cached_response).to eq(forecast_result.cached_response)
+      end
     end
   end
 end
