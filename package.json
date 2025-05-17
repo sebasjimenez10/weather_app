@@ -1,0 +1,12 @@
+{
+  "name": "weather_app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:sebasjimenez10/weather_app.git",
+  "author": "Sebastian Jimenez <sebasjimenezv@gmail.com>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "cypress": "^14.3.3"
+  }
+}
