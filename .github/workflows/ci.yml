@@ -85,6 +85,29 @@ jobs:
             sleep 1
           done
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips libpq-dev chromium-chromedriver chromium-browser
+
+      - name: Install Chrome and Chromedriver 136
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libvips libpq-dev unzip wget
+
+          # Install Chrome 136 (already installed on GitHub runners, just confirm)
+          google-chrome --version || true
+
+          # Download the exact version of Chromedriver for Chrome 136
+          wget https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/136.0.7103.92/linux64/chromedriver-linux64.zip
+          unzip chromedriver-linux64.zip
+          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+          sudo chmod +x /usr/local/bin/chromedriver
+          chromedriver --version
+
+      - name: Set CHROMEDRIVER path
+        run: echo "PATH=$PATH:/usr/lib/chromium-browser/" >> $GITHUB_ENV
+
       - name: Set up database
         run: |
           bundle exec rails db:create
@@ -105,3 +128,4 @@ jobs:
           PGPASSWORD: postgres
           PGDATABASE: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          CI: true

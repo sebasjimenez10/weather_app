@@ -1,7 +1,7 @@
 describe("Forecasts index page", () => {
   it("loads successfully", () => {
-    cy.visit("/forecasts/82 Cartier Aisle%2C Irvine CA%2C 92620");
+    cy.visit("/forecasts/8130 Branch Rd%2C Los Angeles%2C CA 90019");
     cy.contains("Forecast Details");
-    cy.contains("City: Irvine");
+    cy.contains("City: Los Angeles");
   });
 });

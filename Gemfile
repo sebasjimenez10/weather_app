@@ -73,4 +73,6 @@ end
 
 group :test do
   gem "simplecov", require: false
+  gem "capybara", "~> 3.40"
+  gem "selenium-webdriver", "~> 4.32"
 end
