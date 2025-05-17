@@ -15,8 +15,9 @@ module Weather
         # The API key is fetched from the Rails credentials based on the current environment.
         #
         # @param [String] Optional key The API key for the Weather API
-        def initialize(key = api_key)
+        def initialize(key: api_key, client: self.class)
           @auth = { key: key }
+          @client = client
         end
 
         # Fetches the weather forecast for the given zip code.
@@ -29,7 +30,7 @@ module Weather
         def forecast(zip_code)
           options = { q: zip_code }.merge!(auth)
 
-          self.class.get("/v1/forecast.json", query: options, format: :plain).then do |json_response|
+          @client.get("/v1/forecast.json", query: options, format: :plain).yield_self do |json_response|
             Response.new(json_response)
           end
         end

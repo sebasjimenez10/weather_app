@@ -13,20 +13,20 @@ RSpec.describe Weather::API::WeatherAPI::Client do
   end
 
   describe "#forecast" do
-    let(:client) { described_class.new("test_key") }
-    let(:client_class) { described_class }
+    let(:client) { described_class.new(key: "test_key", client: client_mock) }
+    let(:client_class) { Weather::API::WeatherAPI::MockClient }
+    let(:client_mock) { client_class.new }
     let(:zip_code) { "12345" }
-    let(:response) { instance_double(Weather::API::WeatherAPI::Response) }
 
     before do
-      allow(client_class).to receive(:get).and_return(response)
-      allow(Weather::API::WeatherAPI::Response).to receive(:new).with(response).and_return(response)
+      allow(client_class).to receive(:new).and_return(client_mock)
+      allow(client_mock).to receive(:get).and_call_original
     end
 
     it "fetches the weather forecast for the given zip code" do
       client.forecast(zip_code)
 
-      expect(client_class).to(
+      expect(client_mock).to(
         have_received(:get)
           .with(
             "/v1/forecast.json",
