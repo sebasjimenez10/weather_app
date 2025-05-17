@@ -67,7 +67,7 @@ RSpec.describe Forecasts::ForecastDecorator do
 
   describe "#localtime" do
     it "returns the localtime" do
-      expect(decorator.localtime).to eq("2024-06-01 12:00")
+      expect(decorator.localtime).to eq("Saturday, June 01, 2024")
     end
   end
 

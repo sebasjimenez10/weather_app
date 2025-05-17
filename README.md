@@ -31,6 +31,20 @@ The following diagram illustrates the flow from the user interface to the weathe
   <img src="docs/internal-flow.png" alt="Architecture Diagram" width="600"/>
 </p>
 
+## UI
+
+### Search UI
+
+<p align="center">
+  <img src="docs/address-search.png" alt="Address Search UI" width="600"/>
+</p>
+
+### Results UI
+
+<p align="center">
+  <img src="docs/search-results.png" alt="Search Results UI" width="600"/>
+</p>
+
 ## Ruby version
 
 - Ruby 3.3.0

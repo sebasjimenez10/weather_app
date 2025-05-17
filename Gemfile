@@ -46,6 +46,10 @@ gem "httparty", "~> 0.23.1"
 # Street address parser
 gem "StreetAddress", "~> 1.0", require: "street_address"
 
+# Tailwind CSS
+gem "tailwindcss-ruby", "~> 4.1"
+gem "tailwindcss-rails", "~> 4.2"
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"

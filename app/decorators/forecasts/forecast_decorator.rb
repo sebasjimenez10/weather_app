@@ -31,7 +31,7 @@ module Forecasts
     end
 
     def localtime
-      @location.localtime
+      @location.localtime.to_datetime.strftime("%A, %B %d, %Y")
     end
 
     def cached_response
@@ -56,6 +56,14 @@ module Forecasts
 
     def forecastdays
       @forecast.forecastday
+    end
+
+    def friendly_time(time)
+      time.to_datetime.strftime("%H:%M:%S")
+    end
+
+    def friendly_date(date)
+      date.to_datetime.strftime("%B %d, %Y")
     end
   end
 end

@@ -26,6 +26,8 @@ RSpec.describe "Forecasts", type: :request do
             day: double(
               maxtemp_c: 25,
               mintemp_c: 15,
+              mintemp_f: 59,
+              maxtemp_f: 77,
               condition: double(
                 text: "Sunny",
                 icon: "https://cdn.weatherapi.com/weather/64x64/day/113.png"
@@ -35,6 +37,7 @@ RSpec.describe "Forecasts", type: :request do
               double(
                 time: "2025-05-16 13:00",
                 temp_c: 22,
+                temp_f: 44,
                 condition: double(
                   text: "Sunny",
                   icon: "https://cdn.weatherapi.com/weather/64x64/day/113.png"
@@ -42,7 +45,9 @@ RSpec.describe "Forecasts", type: :request do
               )
             ]
           )
-        ]
+        ],
+        friendly_time: lambda do |time| time end,
+        friendly_date: lambda do |date| date end
       )
     }
 
