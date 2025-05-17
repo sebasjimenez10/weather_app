@@ -1,11 +1,3 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
-# SimpleCov config
-if ENV['RAILS_ENV'] == 'test'
-  require 'simplecov'
-  SimpleCov.start 'rails'
-  puts "--- Loaded simplecov"
-end
-
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'

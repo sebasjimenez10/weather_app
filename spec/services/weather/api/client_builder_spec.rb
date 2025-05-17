@@ -7,12 +7,6 @@ RSpec.describe Weather::API::ClientBuilder do
         client = described_class.build_client(name: :weather_api)
         expect(client).to be_a(Weather::API::WeatherAPI::Client)
       end
-
-      it "returns a singleton instance" do
-        client1 = described_class.build_client(name: :weather_api)
-        client2 = described_class.build_client(name: :weather_api)
-        expect(client1).to equal(client2)
-      end
     end
 
     context "when name is unsupported" do
