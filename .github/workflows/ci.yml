@@ -87,7 +87,7 @@ jobs:
 
       - name: Set up database
         run: |
-          bundle exec rails db:create db:schema:load --trace
+          bundle exec rails db:create
         env:
           RAILS_ENV: test
           PGHOST: localhost
