@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe Weather::ForecastResult do
+RSpec.describe Weather::ForecastService::ForecastResult do
   let(:result_double) { instance_double(Weather::API::WeatherAPI::Response) }
 
   describe "#initialize" do
