@@ -31,10 +31,11 @@ module Weather
           Rails.logger.debug("Fetching forecast for query: #{query}")
 
           options = { q: query }.merge!(auth)
+          response = @client.get("/v1/forecast.json", query: options, format: :plain)
+          return Response.new(response) if response.success?
 
-          @client.get("/v1/forecast.json", query: options, format: :plain).yield_self do |json_response|
-            Response.new(json_response)
-          end
+          Rails.logger.error("Error fetching forecast: #{response.code} - #{response.message}")
+          raise HTTParty::Error, "Failed to fetch forecast: #{response.message}"
         end
 
         private

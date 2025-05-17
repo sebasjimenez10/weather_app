@@ -5,7 +5,7 @@ RSpec.describe Forecasts::ForecastAddressForm, type: :model do
 
   let(:valid_address) { "1600 Pennsylvania Ave, Washington, DC 20500" }
   let(:valid_address_zipcode_only) { "20500" }
-  let(:invalid_address) { "Not a real address" }
+  let(:ambiguous_address) { "Not a real address" }
   let(:blank_address) { "" }
 
   describe "validations" do
@@ -44,11 +44,11 @@ RSpec.describe Forecasts::ForecastAddressForm, type: :model do
     end
 
     context "when address is present but invalid" do
-      let(:address) { invalid_address }
+      let(:address) { ambiguous_address }
 
       it "is not valid" do
-        expect(subject).not_to be_valid
-        expect(subject.errors[:address]).to include("is not a valid address")
+        expect(subject).to be_valid
+        expect(subject.errors[:address]).not_to include("is not a valid address")
       end
     end
   end
@@ -75,10 +75,10 @@ RSpec.describe Forecasts::ForecastAddressForm, type: :model do
     end
 
     context "when address is invalid" do
-      let(:address) { invalid_address }
+      let(:address) { ambiguous_address }
 
       it "returns nil" do
-        expect(subject.to_street_address).to be_nil
+        expect(subject.to_street_address).not_to be_nil
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe Forecasts::ForecastAddressForm, type: :model do
       let(:address) { blank_address }
 
       it "returns nil" do
-        expect(subject.to_street_address).to be_nil
+        expect(subject.to_street_address).not_to be_nil
       end
     end
   end

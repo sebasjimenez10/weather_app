@@ -38,6 +38,11 @@ module Weather
       # @return [Weather::API::WeatherAPI::Response] The response object containing forecast data
       #   - data [OpenStruct] The forecast data
       def retrieve_forecast(address, client)
+        if address.postal_code.blank?
+          Rails.logger.info("[ForecastService][Cache miss] zip code missing #{address.to_s.strip}")
+          return client.forecast(address.to_s.strip)
+        end
+
         Rails.cache.fetch(address.postal_code, expires_in: 30.minutes) do
           Rails.logger.info("[ForecastService][Cache miss] Fetching forecast for #{address.postal_code}")
           client.forecast(address.postal_code)
@@ -50,6 +55,8 @@ module Weather
       # @param [StreetAddress::US] address The parsed address
       # @return [Boolean] true if cached, false otherwise
       def check_cache_existence(address)
+        return false if address.postal_code.blank?
+
         cache_exists = Rails.cache.exist?(address.postal_code)
 
         if cache_exists

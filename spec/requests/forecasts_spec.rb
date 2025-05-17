@@ -1,6 +1,14 @@
 require "rails_helper"
 
 RSpec.describe "Forecasts", type: :request do
+  let(:client) { Weather::API::WeatherAPI::Client.new(key: "test_key", client: client_mock) }
+  let(:client_mock) { Weather::API::WeatherAPI::MockClient.new }
+
+  before do
+    allow(Weather::API::ClientBuilder).to receive(:build_client).and_return(client)
+    allow(client_mock).to receive(:get).and_call_original
+  end
+
   describe "GET /index" do
     it "returns http success" do
       get "/forecasts"
@@ -57,7 +65,7 @@ RSpec.describe "Forecasts", type: :request do
 
     it "returns http success" do
       address = "1 Civic Center Plaza, Irvine, CA 92606"
-      get "/forecasts/#{CGI.escape(address)}"
+      get "/forecasts/#{URI.encode_uri_component(address)}"
       expect(response).to have_http_status(:success)
     end
 
