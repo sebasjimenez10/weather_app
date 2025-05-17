@@ -22,6 +22,7 @@ class ForecastsController < ApplicationController
     forecast_form = Forecasts::ForecastAddressForm.new(forecast_params)
 
     if !forecast_form.valid?
+      Rails.logger.error("Invalid address: #{forecast_form.errors.full_messages.join(', ')}")
       redirect_to forecasts_path, flash: { alert: "Please enter a valid address." }
       return
     end

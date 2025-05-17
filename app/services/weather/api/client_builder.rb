@@ -15,6 +15,7 @@ module Weather
           when :weather_api
             Weather::API::WeatherAPI::Client.new
           else
+            Rails.logger.error("Unsupported weather client: #{name}")
             raise "Unsupported client"
           end
         end

@@ -23,12 +23,14 @@ module Weather
         # Fetches the weather forecast for the given zip code.
         # It constructs the query parameters with the zip code and authentication key.
         #
-        # @param [String] zip_code The zip code for which to fetch the forecast
+        # @param [String] query The zip code for which to fetch the forecast
         # @return [Weather::API::WeatherAPI::Response] The parsed response object containing forecast data
         # @raise [HTTParty::Error] if the request fails
         # @raise [JSON::ParserError] if the response is not valid JSON
-        def forecast(zip_code)
-          options = { q: zip_code }.merge!(auth)
+        def forecast(query)
+          Rails.logger.debug("Fetching forecast for query: #{query}")
+
+          options = { q: query }.merge!(auth)
 
           @client.get("/v1/forecast.json", query: options, format: :plain).yield_self do |json_response|
             Response.new(json_response)

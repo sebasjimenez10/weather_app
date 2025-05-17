@@ -19,4 +19,12 @@ RSpec.describe "Forecasts", type: :system do
     expect(page).to have_content("California")
     expect(page).to have_content("USA")
   end
+
+  it "shows an error message for invalid ZIP code" do
+    visit forecasts_path
+    fill_in "forecast-address", with: "A"
+    click_button "Get Forecast"
+
+    expect(page).to have_content("Please enter a valid address. ")
+  end
 end
