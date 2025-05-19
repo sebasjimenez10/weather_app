@@ -26,6 +26,14 @@ A simple Ruby on Rails application that provides weather forecast for a given ad
 - Stimulus is used to create a smooth, single-page address submission experience.
 - Mock clients are injected in Cypress and test environments for speed and isolation.
 
+### Future Improvements
+
+- Add user authentication and favorites
+- Support multi-language/localization for forecast terms
+- Add background job to refresh cache asynchronously
+- Handle more granular geocoding
+- Support cache with geo-coordinates (rounded) when zip code is lacking.
+
 ### Web routes
 
 - `/` (root) renders the same content as in `/forecasts`
@@ -129,10 +137,3 @@ To simply run all Cypress tests run `npx cypress run`.
 - Capybara + RSpec for testing
 - Cypress for E2E browser tests
 - Stimulus (via importmap-rails)
-
-## Future Improvements
-
-- Add user authentication and favorites
-- Support multi-language/localization for forecast terms
-- Add background job to refresh cache asynchronously
-- Handle more granular geocoding
