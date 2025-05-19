@@ -64,11 +64,14 @@ The following diagram illustrates the flow from the user interface to the weathe
 2. Run `bundle install` to install dependencies.
 3. Run `bundle exec rails db:create` to create the db.
 4. Make sure your rails master key is set (config/master.key)
-5. Set your [WeatherAPI](https://www.weatherapi.com/docs/) API key inside the credentials file:
+5. Set your [WeatherAPI](https://www.weatherapi.com/docs/) and [Mapbox](https://www.mapbox.com/) keys inside the credentials file:
    5.1 Run `EDITOR="code --wait" bundle exec rails credentials:edit`.
    5.2 Make sure it follows this structure:
 
    ```yaml
+   mapbox:
+     public_token: <...>
+
    development:
      weather_api_key: <...>
 
