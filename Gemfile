@@ -48,7 +48,7 @@ gem "StreetAddress", "~> 1.0", require: "street_address"
 
 # Tailwind CSS
 gem "tailwindcss-ruby", "~> 4.1"
-gem "tailwindcss-rails", "~> 4.2"
+gem "tailwindcss-rails", "~> 4.3"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
