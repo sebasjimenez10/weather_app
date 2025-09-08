@@ -67,7 +67,7 @@ group :development, :test do
   gem "ffaker", "~> 2.24"
 
   # Factory Bot
-  gem "factory_bot_rails", "~> 6.4"
+  gem "factory_bot_rails", "~> 6.5"
 end
 
 group :development do
